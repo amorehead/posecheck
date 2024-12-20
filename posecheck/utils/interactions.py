@@ -5,19 +5,20 @@ import prolif as plf
 from rdkit import DataStructs
 
 
-def generate_interaction_df(prot: plf.Molecule, lig: plf.Molecule) -> pd.DataFrame:
+def generate_interaction_df(prot: plf.Molecule, lig: plf.Molecule, n_jobs: Optional[int] = None) -> pd.DataFrame:
     """
     Generate a DataFrame with all interactions between protein and ligand.
 
     Args:
         prot: A protein molecule of type plf.Molecule.
         lig: A ligand molecule of type plf.Molecule.
+        n_jobs: The number of parallel jobs to run. If None, all available CPUs are used.
 
     Returns:
         A DataFrame representing all interactions between the protein and ligand.
     """
     fp = plf.Fingerprint()
-    fp.run_from_iterable(lig, prot)
+    fp.run_from_iterable(lig, prot, n_jobs=n_jobs)
     df = fp.to_dataframe()
     return df
 
