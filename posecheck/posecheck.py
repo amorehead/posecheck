@@ -1,5 +1,5 @@
 import os
-from typing import List
+from typing import List, Optional
 
 import datamol as dm
 import pandas as pd
@@ -120,9 +120,9 @@ class PoseCheck(object):
         """Calculate the strain energy of the ligand."""
         return [calculate_strain_energy(mol) for mol in self.ligands]
 
-    def calculate_interactions(self) -> pd.DataFrame:
+    def calculate_interactions(self, n_jobs: Optional[int] = None) -> pd.DataFrame:
         """Calculate the interactions between the protein and the ligand."""
-        return generate_interaction_df(self.protein, self.ligands)
+        return generate_interaction_df(self.protein, self.ligands, n_jobs=n_jobs)
 
     def calculate_rmsd(self, mol1: Chem.Mol, mol2: Chem.Mol) -> float:
         """Calculate the RMSD between two molecules
