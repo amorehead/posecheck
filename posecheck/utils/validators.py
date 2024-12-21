@@ -14,7 +14,7 @@ def is_reduce_installed(reduce_path: str = REDUCE_PATH) -> bool:
     """
     try:
         result = subprocess.run([reduce_path, '-version'], capture_output=True, text=True)
-        return result.returncode == 0
+        return result.returncode in [0, 2]
     except Exception as e:
         print(f"An error occurred while checking 'reduce': {e}")
         return False
